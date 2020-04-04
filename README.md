@@ -18,12 +18,19 @@ Import the database from the json dump using following command.\
 mongoimport --db=caterli-db --collection=restaurants --file=restaurants.json
 ```
 
-### Step 5: 
-Go to caterli-server dir in Terminal and run the following command.\
+### Step 5:
+Go to caterli-server dir in Terminal and add ```caterli_jwtPrivateKey``` Environment variable using following command.\
+```properties
+export caterli_jwtPrivateKey=MySecretPrivateKey   // For Mac
+set caterli_jwtPrivateKey=MySecretPrivateKey      // For Windows
+```
+
+### Step 6: 
+In the caterli-server dir in Terminal and run the following command.\
 ```properties
 npm install && npm start
 ```
-### Step 6:
+### Step 7:
 Go to caterli-app dir in separate Terminal and run the following command.\
 ```properties
 npm install && npm start
