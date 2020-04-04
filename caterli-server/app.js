@@ -15,6 +15,11 @@ const restaurantRouter = require('./routes/restaurants');
 
 var app = express();
 
+if (!process.env.caterli_jwtPrivateKey) {
+  console.error("ERROR: jwtPrivateToken is not defined in Environment Variables")
+  process.exit(1);
+}
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
