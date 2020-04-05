@@ -1,13 +1,14 @@
 const {Restaurant, validate} = require('../models/restaurant');
+const asyncMiddleWare = require('../middlewares/async');
 const express = require('express');
 const _ = require("lodash");
 const mongoose = require("mongoose");
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', asyncMiddleWare(async (req, res, next) => {
   const restaurantList = await Restaurant.find({});
   res.send(restaurantList);
-});
+}));
 
 router.get('/search', async (req, res) => {
   const queryText = req.query.text;

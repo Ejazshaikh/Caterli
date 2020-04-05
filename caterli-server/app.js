@@ -12,6 +12,7 @@ var usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const orderRouter = require('./routes/orders');
 const restaurantRouter = require('./routes/restaurants');
+const errorMiddleware = require('./middlewares/error');
 
 var app = express();
 
@@ -24,7 +25,12 @@ if (!process.env.caterli_jwtPrivateKey) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-mongoose.connect("mongodb://localhost/caterli-db")
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
+
+mongoose.connect("mongodb://localhost/caterli-db", options)
     .then(() => console.log("DB Connected"));
 
 app.use(cors());
@@ -46,14 +52,6 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+app.use(errorMiddleware);
 
 module.exports = app;
