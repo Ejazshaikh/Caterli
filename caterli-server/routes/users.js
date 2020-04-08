@@ -1,16 +1,17 @@
-const {User, validate} = require('../models/user');
 const express = require('express');
-const _ = require("lodash");
-const bcrypt = require("bcrypt");
+const _ = require('lodash');
+const bcrypt = require('bcrypt');
+const { User, validate } = require('../models/user');
+
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', (req, res) => {
   res.send('respond with a resource');
 });
 
 router.post('/', async (req, res) => {
-  const { error } = validate(req.body); 
+  const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   let user = await User.findOne({ email: req.body.email });
@@ -21,8 +22,8 @@ router.post('/', async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
   const token = user.generateAuthToken();
-  const response = { accessToken: token, userData: _.pick(user, ['_id', 'name', 'email'])  }
-  res.status(200).send(response);
+  const response = { accessToken: token, userData: _.pick(user, ['_id', 'name', 'email']) };
+  return res.status(200).send(response);
 });
 
 module.exports = router;

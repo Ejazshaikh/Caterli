@@ -1,23 +1,23 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const cors = require('cors');
 
 const mongoose = require('mongoose');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const orderRouter = require('./routes/orders');
 const restaurantRouter = require('./routes/restaurants');
 const errorMiddleware = require('./middlewares/error');
 
-var app = express();
+const app = express();
 
 if (!process.env.caterli_jwtPrivateKey) {
-  console.error("ERROR: jwtPrivateToken is not defined in Environment Variables")
+  console.error('ERROR: caterli_jwtPrivateKey is not defined in Environment Variables');
   process.exit(1);
 }
 
@@ -26,8 +26,7 @@ const options = {
   useUnifiedTopology: true,
 };
 
-mongoose.connect("mongodb://localhost/caterli-db", options)
-    .then(() => console.log("DB Connected"));
+mongoose.connect('mongodb://localhost/caterli-db', options).then(() => console.log('DB Connected'));
 
 app.use(cors());
 app.use(logger('dev'));
@@ -38,12 +37,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/auth', authRouter)
-app.use('/api/restaurants', restaurantRouter)
-app.use('/api/order', orderRouter)
+app.use('/api/auth', authRouter);
+app.use('/api/restaurants', restaurantRouter);
+app.use('/api/order', orderRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 

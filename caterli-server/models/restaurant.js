@@ -6,7 +6,7 @@ const restaurantSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 5,
-    maxlength: 50
+    maxlength: 50,
   },
   type: {
     type: String,
@@ -21,7 +21,7 @@ const restaurantSchema = new mongoose.Schema({
   },
   profilePicLoc: {
     type: String,
-    maxlength: 1024
+    maxlength: 1024,
   },
   menu: [
     {
@@ -29,7 +29,7 @@ const restaurantSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 3,
-        maxlength: 50
+        maxlength: 50,
       },
       category: {
         type: String,
@@ -40,10 +40,10 @@ const restaurantSchema = new mongoose.Schema({
         type: Number,
         min: 1,
         max: 5000,
-        required: true
+        required: true,
       },
-    }
-  ]
+    },
+  ],
 });
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);
@@ -54,15 +54,17 @@ function validateResaurant(user) {
     type: Joi.string().min(2).max(150).required(),
     profilePicLoc: Joi.string().min(3).max(1024),
     category: Joi.string().required(),
-    menu: Joi.array().items(Joi.object({
-      name: Joi.string().min(3).max(50).required(),
-      category: Joi.string().required(),
-      price: Joi.number().min(1).max(5000).required()
-  }))
+    menu: Joi.array().items(
+      Joi.object({
+        name: Joi.string().min(3).max(50).required(),
+        category: Joi.string().required(),
+        price: Joi.number().min(1).max(5000).required(),
+      }),
+    ),
   });
 
-  return schema.validate(user)
+  return schema.validate(user);
 }
 
-exports.Restaurant = Restaurant; 
+exports.Restaurant = Restaurant;
 exports.validate = validateResaurant;
