@@ -6,7 +6,5 @@ module.exports = function () {
     useUnifiedTopology: true,
   };
 
-  mongoose
-    .connect('mongodb://localhost/caterli-db', options)
-    .then(() => console.log('DB Connected'));
+  mongoose.connect(process.env.caterli_db, options).then(() => console.log('DB Connected'));
 };
