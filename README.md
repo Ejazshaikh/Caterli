@@ -19,7 +19,7 @@ mongoimport --db=caterli-db --collection=restaurants --file=restaurants.json
 ```
 
 ### Step 5:
-Go to caterli-server dir in Terminal and add .env and add the following line in it.\
+Go to caterli-server dir in Terminal and add .env file and add the following line in it.\
 ```properties
 caterli_jwtPrivateKey=my_secret_key
 caterli_db=mongodb://localhost/caterli-db
