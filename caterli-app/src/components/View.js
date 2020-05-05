@@ -1,17 +1,20 @@
 import React, { PureComponent } from 'react';
+import styled from 'styled-components';
+
+const StyledView = styled.div`
+  position: relative;
+  display: flex;
+`
 
 export default class View extends PureComponent {
   render() {
     return (
-      <div
-        style={{
-          position: 'relative',
-          display: 'flex',
-          ...this.props.style,
-        }}
+      <StyledView
+        className={this.props.className}
+        style={this.props.style}
       >
         {this.props.children}
-      </div>
+      </StyledView>
     );
   }
 }
